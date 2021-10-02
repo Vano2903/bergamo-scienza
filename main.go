@@ -44,7 +44,7 @@ func richiestaHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(fmt.Sprintf(`{"ok": false, "message":"il bottone é stato premuto dopo %d millisecondi"}`, delay)))
 		return
 	}
-	w.Write([]byte(`{"msg": "troppo presto"}`))
+	w.Write([]byte(`{"ok": false, "message": "troppo presto"}`))
 }
 
 func resetHandler(w http.ResponseWriter, r *http.Request) {

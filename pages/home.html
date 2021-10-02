@@ -15,7 +15,6 @@
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
 
-
     <style>
         body {
             background-color: #000;
@@ -24,16 +23,17 @@
         }
 
         button {
+            z-index: 3;
             width: 80%;
             height: 200px;
         }
 
         .won {
-            background-color: rgb(130, 251, 48);
+            background-color: rgb(86, 216, 86);
         }
 
         .lose {
-            background-color: rgb(251, 48, 48);
+            background-color: rgb(216, 86, 86);
         }
 
         .circle {
@@ -43,33 +43,35 @@
             height: 100px;
         }
 
-        .buttonSection {}
+        #return {
+            color: rgb(83, 71, 250);
+            font-size: 24px;
+        }
     </style>
 
     <title>BG SCIENZA - informatica paleocapa</title>
 </head>
 
 <body>
-    <section class="titleSection">
-        <div class="titleContainer">
-            <h1 style="color: #fff; text-align: center;">CIAO 😊</h1>
-        </div>
-    </section>
+    <center>
+        <section class="titleSection">
+            <div class="titleContainer">
+                <h1 style="color: #fff; text-align: center;">CIAO 😊</h1>
+            </div>
+        </section>
 
-    <section class="buttonSection">
-        <div class="buttonContainer">
-            <button id="richiesta" onclick="inviaRichiesta()" class="btn btn-primary">PREMIMI</button>
+        <section class="buttonSection">
+            <div class="buttonContainer">
+                <button id="richiesta" onclick="inviaRichiesta()" class="btn btn-primary">PREMIMI</button>
 
-            <button id="reset" style="display: none; border-radius: 100px;" type="button" onclick="reset()"
-                class="btn btn-warning">RIPRISTINA LA
-                SCHERMATA</button>
-        </div>
-        <div class="result">
-            <p id="return">
-
-            </p>
-        </div>
-    </section>
+                <button id="reset" style="display: none;" onclick="reset()" class="btn btn-warning">RIPRISTINA LA
+                    SCHERMATA</button>
+            </div>
+            <div class="result">
+                <p id="return"></p>
+            </div>
+        </section>
+    </center>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -78,22 +80,27 @@
 
     <script>
         async function inviaRichiesta() {
+            document.getElementById("reset").disabled = true;
             const res = await fetch("/richiesta")
             let resp = await res.json();
-
+            console.log(resp)
             if (resp.ok) {
-                $("body").addClass('won');
+                document.getElementsByTagName("body")[0].classList.add('won');
             } else {
-                $("body").addClass('lose');
+                document.getElementsByTagName("body")[0].classList.add('lose');
             }
-            $("#return").text(resp.message);
+
+            document.getElementById("return").innerHTML = resp.message;
             document.getElementById("reset").style.display = "block";
             document.getElementById("richiesta").style.display = "none";
+            setTimeout(() => { document.getElementById("reset").disabled = false; }, 3000)
         }
 
         function reset() {
-            $("#return").text("")
-            $("body").removeClass();
+            document.getElementById("reset").disabled = false;
+            document.getElementById("return").innerHTML = "";
+            document.getElementsByTagName("body")[0].classList.remove("won");
+            document.getElementsByTagName("body")[0].classList.remove("lose");
             document.getElementById("reset").style.display = "none";
             document.getElementById("richiesta").style.display = "block";
         }
