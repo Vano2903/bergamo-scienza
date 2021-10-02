@@ -10,9 +10,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+
     <style>
         body {
             background-color: #000;
+            display: grid;
+            justify-content: center;
         }
 
         button {
@@ -34,22 +40,37 @@
             width: 100px;
             height: 100px;
         }
+
+        .buttonSection {
+
+        }
     </style>
 
     <title>BG SCIENZA - informatica paleocapa</title>
 </head>
 
 <body>
-    <center>
-        <h1 style="color: #fff;">CIAO :D</h1>
-        <br><br>
-        <button id="richiesta" style="border-radius: 100px;" onclick="inviaRichiesta()" type="button"
-            class="btn btn-info">PREMIMI</button>
+    <section class="titleSection">
+        <div class="titleContainer">
+            <h1 style="color: #fff; text-align: center;">CIAO 😊</h1>
+        </div>
+    </section>
 
-        <button id="reset" style="display: none; border-radius: 100px;" type="button" onclick="reset()"
-            class="btn btn-warning">RIPRISTINA LA
-            SCHERMATA</button>
-    </center>
+    <section class="buttonSection">
+        <div class="buttonContainer">
+            <button id="richiesta" onclick="inviaRichiesta()" class="btn btn-primary">PREMIMI</button>
+    
+            <button id="reset" style="display: none; border-radius: 100px;" type="button" onclick="reset()"
+                class="btn btn-warning">RIPRISTINA LA
+                SCHERMATA</button>
+        </div>
+        <div class="result">
+            <p id="return">
+                
+            </p>
+        </div>
+    </section>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -58,19 +79,20 @@
     <script>
         async function inviaRichiesta() {
             const res = await fetch("/richiesta")
-            let resp = await resp.json();
+            let resp = await res.json();
 
             if (resp.ok) {
                 $("body").addClass('won');
             } else {
                 $("body").addClass('lose');
             }
-
+            $("#return").text(resp.msg);
             document.getElementById("reset").style.display = "block";
             document.getElementById("richiesta").style.display = "none";
         }
 
         function reset() {
+            $("#return").text("")
             $("body").removeClass();
             document.getElementById("reset").style.display = "none";
             document.getElementById("richiesta").style.display = "block";
