@@ -1,1 +1,1 @@
-web: bin/bergamo-scienza
+web: bin/bgs
